@@ -1,0 +1,40 @@
+{
+  "name": "encurtador-url",
+  "version": "1.0.0",
+  "description": "Encurtador de URL ",
+  "keywords": [
+    "Express",
+    "MySql",
+    "Sequelize",
+    "Cors",
+    "Zod",
+    "Nanoid",
+    "DotEnv",
+    "Helmet"
+  ],
+  "license": "ISC",
+  "author": "Douglas",
+  "type": "module",
+  "main": "app.js",
+  "scripts": {
+    "prod": "node ./app.js",
+    "dev": "node --watch ./app.js"
+  },
+  "dependencies": {
+    "bcryptjs": "^3.0.3",
+    "cors": "^2.8.6",
+    "dotenv": "^17.3.1",
+    "express": "^5.2.1",
+    "helmet": "^8.1.0",
+    "jsonwebtoken": "^9.0.3",
+    "mysql2": "^3.20.0",
+    "nanoid": "^5.1.7",
+    "sequelize": "^6.37.8",
+    "swagger-jsdoc": "^6.2.8",
+    "swagger-ui-express": "^5.0.1",
+    "zod": "^4.3.6"
+  },
+  "devDependencies": {
+    "sequelize-cli": "^6.6.5"
+  }
+}
