@@ -61,7 +61,6 @@ const router = express.Router();
  *             schema:
  *               $ref: '#/components/schemas/ErrorResponse'
  */
-router.get("/", AuthMiddle, UrlController.findAll);
 
 /**
  * @openapi
@@ -102,7 +101,6 @@ router.get("/", AuthMiddle, UrlController.findAll);
  *             schema:
  *               $ref: '#/components/schemas/ErrorResponse'
  */
-router.post("/shorten", AuthMiddle, UrlController.create);
 
 /**
  * @openapi
@@ -213,10 +211,10 @@ router.post("/shorten", AuthMiddle, UrlController.create);
  *               $ref: '#/components/schemas/ErrorResponse'
  */
 
+router.post("/shorten", AuthMiddle, UrlController.create);
+router.get("/", AuthMiddle, UrlController.findAll);
 router.get("/:id", AuthMiddle, UrlController.findById);
-
 router.put("/:id", AuthMiddle, UrlController.update);
-
 router.delete("/:id", AuthMiddle, UrlController.deleteOne);
 
 export default router;

@@ -30,12 +30,7 @@ app.use(globalErrorHandler);
 
 try {
   await sequelize.authenticate();
-  console.log("Banco de dados conectado com sucesso!");
-
-  app.listen(port, () => {
-    console.log(`App rodando na porta: ${port}`);
-    console.log(`Acesse: http://localhost:${port}`);
-  });
+  app.listen(port);
 } catch (error) {
-  console.error("Erro ao conectar no banco de dados", error);
+  throw error;
 }
