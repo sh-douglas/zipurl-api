@@ -4,18 +4,30 @@ import { nanoid } from "nanoid";
 import UrlRepository from "../repositories/UrlRepository.js";
 import AppError from "../errors/AppError.js";
 
-const UrlSchema = z.object({
+const CreateUrlSchema = z.object({
+  title: z.string().optional(),
+  description: z.string().optional(),
   longUrl: z.string().url(),
 });
 
-class UrlService {
-  async shorten(longUrl, userId) {
-    const cleanData = UrlSchema.parse({ longUrl });
+const UpdatedUrlSchema = z.object({
+  title: z.string().optional(),
+  description: z.string().optional(),
+  longUrl: z.string().url().optional(),
+});
 
-    const shortUrl = nanoid(6);
+class UrlService {
+  async shorten(data, userId) {
+    const cleanData = CreateUrlSchema.parse(data);
+    const finalTitle = cleanData.title ?? new URL(cleanData.longUrl).hostname;
+    const finalDescription = cleanData.description ?? null;
+
+    const shortCode = nanoid(6);
     const newUrl = await UrlRepository.create(
+      finalTitle,
+      finalDescription,
       cleanData.longUrl,
-      shortUrl,
+      shortCode,
       userId,
     );
 
@@ -47,7 +59,7 @@ class UrlService {
       throw new AppError("Link não encontrado!", 404);
     }
 
-    const cleanData = UrlSchema.parse(data);
+    const cleanData = UpdatedUrlSchema.parse(data);
 
     await UrlRepository.update(id, cleanData, userId);
 
@@ -66,8 +78,8 @@ class UrlService {
     await UrlRepository.delete(id, userId);
   }
 
-  async getDestination(shortUrl) {
-    const urlData = await UrlRepository.findByShortCode(shortUrl);
+  async getDestination(shortCode) {
+    const urlData = await UrlRepository.findByShortCode(shortCode);
 
     if (!urlData) {
       throw new AppError("Link não encontrado!", 404);
@@ -77,15 +89,25 @@ class UrlService {
   }
 
   formatUrl(url) {
-    const { id: urlId, shortUrl, longUrl, createdAt, updatedAt } = url.toJSON();
-
-    return {
-      urlId,
-      shortUrl,
+    const {
+      id: urlId,
+      title,
+      description,
+      shortCode,
       longUrl,
       createdAt,
       updatedAt,
-      fullShortUrl: `${process.env.BASE_URL}/${shortUrl}`,
+    } = url.toJSON();
+
+    return {
+      urlId,
+      title,
+      description,
+      shortCode,
+      longUrl,
+      createdAt,
+      updatedAt,
+      fullShortUrl: `${process.env.BASE_URL}/${shortCode}`,
     };
   }
 }
