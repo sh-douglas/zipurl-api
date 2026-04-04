@@ -3,9 +3,14 @@ import UrlService from "../services/UrlService.js";
 class UrlController {
   async create(req, res, next) {
     try {
-      const { longUrl } = req.body;
+      const { title, description, longUrl } = req.body;
       const userId = req.user.id;
-      const result = await UrlService.shorten(longUrl, userId);
+      const result = await UrlService.shorten(
+        title,
+        description,
+        longUrl,
+        userId,
+      );
 
       return res.status(201).json(result);
     } catch (error) {
