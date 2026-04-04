@@ -1,8 +1,8 @@
 import Url from "../models/Url.js";
 
 class UrlRepository {
-  async create(longUrl, shortUrl, userId) {
-    return await Url.create({ longUrl, shortUrl, userId });
+  async create(title, description, longUrl, shortCode, userId) {
+    return await Url.create({ title, description, longUrl, shortCode, userId });
   }
 
   async findAll(userId) {
@@ -26,8 +26,8 @@ class UrlRepository {
     return await Url.destroy({ where: { id, userId } });
   }
 
-  async findByShortCode(shortUrl) {
-    return await Url.findOne({ where: { shortUrl: shortUrl } });
+  async findByShortCode(shortCode) {
+    return await Url.findOne({ where: { shortCode: shortCode } });
   }
 }
 
