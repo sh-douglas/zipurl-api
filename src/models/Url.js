@@ -7,14 +7,21 @@ const Url = sequelize.define("Url", {
     primaryKey: true,
     autoIncrement: true,
   },
-  longUrl: {
+  title: {
     type: DataTypes.STRING,
-    allowNull: false,
+    allowNull: true,
   },
-  shortUrl: {
+  description: {
+    type: DataTypes.STRING,
+  },
+  shortCode: {
     type: DataTypes.STRING,
     allowNull: false,
     unique: true,
+  },
+  longUrl: {
+    type: DataTypes.STRING,
+    allowNull: false,
   },
   userId: {
     type: DataTypes.INTEGER,
